@@ -10,7 +10,7 @@ import {
   removeTodo,
   toggleTodo,
   updateTodo,
-} from '../store/todos';
+} from '../store/todos/extraReducers';
 import { CircularProgress, Typography } from '@material-ui/core';
 import { Skeleton } from '@material-ui/lab';
 
@@ -24,12 +24,11 @@ function TodoList({ todos, loading }) {
     },
     [dispatch, deleteTodo]
   );
-  const handleToggle =
-    useCallback();
-    // (todo) => {
-    // dispatch(toggleTodo({ id: todo._id, completed: !todo.completed }));
-    // },
-    // [dispatch, updateTodo]
+  const handleToggle = useCallback();
+  // (todo) => {
+  // dispatch(toggleTodo({ id: todo._id, completed: !todo.completed }));
+  // },
+  // [dispatch, updateTodo]
 
   const handleEdit = useCallback(
     (id, value) => {

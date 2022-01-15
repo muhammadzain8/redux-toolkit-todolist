@@ -7,7 +7,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Grid from '@material-ui/core/Grid';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchTodos } from '../store/todos';
+import { fetchTodos } from '../store/todos/extraReducers';
 
 function TodoApp() {
   const { todos, loading } = useSelector((state) => state.todos);

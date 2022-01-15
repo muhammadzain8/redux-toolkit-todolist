@@ -1,53 +1,10 @@
-import { createAsyncThunk, createSlice, nanoid } from '@reduxjs/toolkit';
-import { apiCall } from '../../utils/api';
-import { API_BASE_URL } from '../../utils/constants';
-
-// * Extra Reducers
-export const fetchTodos = createAsyncThunk(
-  'todos/fetchTodos',
-  async (_, { rejectWithValue }) => {
-    return await apiCall
-      .get(`${API_BASE_URL}/todos`)
-      .then((res) => res.data)
-      .catch((err) => rejectWithValue(err.response.data));
-  }
-);
-
-export const createTodo = createAsyncThunk(
-  'todos/createTodo',
-  async (task, { rejectWithValue }) => {
-    console.log(`task`, task);
-    return apiCall
-      .post(`${API_BASE_URL}/todos`, {
-        task,
-        _id: nanoid(5),
-      })
-      .then((res) => res.data)
-      .catch((err) => rejectWithValue(err.response.data));
-  }
-);
-
-export const deleteTodo = createAsyncThunk(
-  `todos/deleteTodo`,
-  async (id, { rejectWithValue }) =>
-    apiCall
-      .delete(`${API_BASE_URL}/todos/${id}`, { method: 'DELETE' })
-      .then((res) => res.data)
-      .catch((err) => rejectWithValue(err.response.data))
-);
-
-export const updateTodo = createAsyncThunk(
-  'todos/updateTodo',
-  async (data, { rejectWithValue }) =>
-    apiCall
-      .patch(`${API_BASE_URL}/todos/${data.id}`, {
-        task: data.task,
-      })
-      .then((res) => res.data)
-      .catch((err) => rejectWithValue(err.response.data))
-  //* Use `err.response.data` as `action.payload` for a `rejected` action,
-  //* by explicitly returning it using the `rejectWithValue()` utility
-);
+import { createSlice } from '@reduxjs/toolkit';
+import {
+  createTodo,
+  deleteTodo,
+  fetchTodos,
+  updateTodo,
+} from './extraReducers';
 
 const initialState = {
   todos: [],
@@ -59,42 +16,6 @@ const initialState = {
 const todosSlice = createSlice({
   name: 'todos',
   initialState,
-  reducers: {
-    addTodo: {
-      reducer: (state, action) => {
-        console.log(`action`, action);
-        state.todos = [action.payload, ...state.todos];
-        state.loading = false;
-      },
-      // * Prepare is a middleware between action and reducer
-      // * its usage is to modify payload before passing it to reducer
-      // * e.g in our case , we are adding id
-      prepare: (value) => {
-        console.log(`value`, value);
-        return { payload: { completed: false, id: nanoid(5), task: value } };
-      },
-    },
-    removeTodo: (state, action) => {
-      state.todos = state.todos.filter((el) => el.id !== action.payload);
-      state.loading = false;
-    },
-    toggleTodo: (state, action) => {
-      state.todos = state.todos.map((el) =>
-        el.id === action.payload ? { ...el, completed: !el.completed } : el
-      );
-      state.loading = false;
-    },
-    editTodo: (state, action) => {
-      state.todos = state.todos.map((el) =>
-        el.id === action.payload.id ? { ...el, task: action.payload.value } : el
-      );
-      state.loading = false;
-    },
-    clearTodos: (state) => {
-      state.todos = [];
-      state.loading = false;
-    },
-  },
 
   // * All async thunk reducers gives us 3 reducers each ,
   // * pending , fulfilled and rejected
