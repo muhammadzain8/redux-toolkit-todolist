@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo, useEffect } from 'react';
 import useToggleState from '../hooks/useToggleState';
 import EditTodoForm from './EditTodoForm';
 import ListItem from '@material-ui/core/ListItem';
@@ -9,8 +9,12 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 
-function Todo({ id, task, completed, removeTodo, toggleTodo, editTodo }) {
+function Todo(props) {
+  const { removeTodo, toggleTodo, editTodo, todo } = props;
+  const { id, task, completed } = todo;
+
   const [isEditing, toggle] = useToggleState(false);
+
   return (
     <ListItem style={{ height: '64px' }}>
       {isEditing ? (
@@ -46,4 +50,4 @@ function Todo({ id, task, completed, removeTodo, toggleTodo, editTodo }) {
   );
 }
 
-export default Todo;
+export default memo(Todo);

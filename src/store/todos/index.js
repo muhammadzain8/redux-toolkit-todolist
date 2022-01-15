@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, nanoid } from '@reduxjs/toolkit';
 
 const initialState = {
   todos: [],
@@ -9,9 +9,16 @@ const todosSlice = createSlice({
   name: 'todos',
   initialState,
   reducers: {
-    addTodo: (state, action) => {
-      state.todos = [action.payload, ...state.todos];
-      state.loading = false;
+    addTodo: {
+      reducer: (state, action) => {
+        console.log(`action`, action);
+        state.todos = [action.payload, ...state.todos];
+        state.loading = false;
+      },
+      prepare: (value) => {
+        console.log(`value`, value);
+        return { payload: { completed: false, id: nanoid(5), task: value } };
+      },
     },
     removeTodo: (state, action) => {
       state.todos = state.todos.filter((el) => el.id !== action.payload);
@@ -25,7 +32,7 @@ const todosSlice = createSlice({
     },
     editTodo: (state, action) => {
       state.todos = state.todos.map((el) =>
-        el.id === action.payload ? { ...el, ...action.payload } : el
+        el.id === action.payload.id ? { ...el, task: action.payload.value } : el
       );
       state.loading = false;
     },

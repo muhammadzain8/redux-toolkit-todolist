@@ -2,14 +2,19 @@ import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
 import useInputState from '../hooks/useInputState';
-function TodoForm({ addTodo }) {
+import { addTodo } from '../store/todos';
+import { useDispatch } from 'react-redux';
+
+function TodoForm() {
   const [value, handleChange, reset] = useInputState('');
+  const dispatch = useDispatch();
+
   return (
     <Paper style={{ margin: '1rem 0', padding: '0 1rem' }}>
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          addTodo(value);
+          dispatch(addTodo(value));
           reset();
         }}
       >
