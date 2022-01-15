@@ -24,11 +24,6 @@ function TodoList({ todos, loading }) {
     },
     [dispatch, deleteTodo]
   );
-  const handleToggle = useCallback();
-  // (todo) => {
-  // dispatch(toggleTodo({ id: todo._id, completed: !todo.completed }));
-  // },
-  // [dispatch, updateTodo]
 
   const handleEdit = useCallback(
     (id, value) => {
@@ -62,7 +57,6 @@ function TodoList({ todos, loading }) {
                 <Todo
                   todo={todo}
                   removeTodo={handleRemove}
-                  toggleTodo={handleToggle}
                   editTodo={handleEdit}
                 />
                 {i < todos.length - 1 && <Divider />}

@@ -44,7 +44,7 @@ const todosSlice = createSlice({
     },
     [createTodo.fulfilled]: (state, { payload }) => {
       state.addingNew = false;
-      state.todos = [payload.todo, ...state.todos];
+      state.todos = [...state.todos, payload.todo];
     },
     [createTodo.rejected]: (state, { payload }) => {
       console.log(`payload`, payload);
