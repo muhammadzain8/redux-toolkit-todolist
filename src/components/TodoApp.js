@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import TodoList from './TodoList';
 import TodoForm from './TodoForm';
 import Typography from '@material-ui/core/Typography';
@@ -6,10 +6,17 @@ import Paper from '@material-ui/core/Paper';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Grid from '@material-ui/core/Grid';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchTodos } from '../store/todos';
 
 function TodoApp() {
-  const todos = useSelector((state) => state.todos.todos);
+  const { todos, loading } = useSelector((state) => state.todos);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchTodos());
+  }, []);
+
   return (
     <Paper
       style={{
@@ -28,7 +35,7 @@ function TodoApp() {
       <Grid container justifyContent='center' style={{ marginTop: '1rem' }}>
         <Grid item xs={11} md={8} lg={4}>
           <TodoForm />
-          <TodoList todos={todos} />
+          <TodoList todos={todos} loading={loading} />
         </Grid>
       </Grid>
     </Paper>

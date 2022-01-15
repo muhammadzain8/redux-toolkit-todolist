@@ -2,7 +2,7 @@ import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
 import useInputState from '../hooks/useInputState';
-import { addTodo } from '../store/todos';
+import { addTodo, createTodo } from '../store/todos';
 import { useDispatch } from 'react-redux';
 
 function TodoForm() {
@@ -14,7 +14,7 @@ function TodoForm() {
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          dispatch(addTodo(value));
+          dispatch(createTodo(value));
           reset();
         }}
       >
