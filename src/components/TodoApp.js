@@ -6,15 +6,9 @@ import Paper from '@material-ui/core/Paper';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Grid from '@material-ui/core/Grid';
-import useTodoState from '../hooks/useTodoState';
 import { useSelector } from 'react-redux';
 
 function TodoApp() {
-  // * Old Way , using Hooks
-  // const initialTodos = [{ id: 1, task: 'Walk The Goldfish', completed: true }];
-  // const { todos, addTodo, removeTodo, toggleTodo, editTodo } =
-  //   useTodoState(initialTodos);
-
   const todos = useSelector((state) => state.todos.todos);
   return (
     <Paper
