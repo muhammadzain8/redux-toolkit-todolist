@@ -8,14 +8,25 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Grid from '@material-ui/core/Grid';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchTodos } from '../store/todos/extraReducers';
+import { globalTodosReducers, simpleTodosReducers } from '../store/todos';
 
 function TodoApp() {
-  const { todos, loading } = useSelector((state) => state.todos);
+  const { loading } = useSelector((state) => {
+    console.log(`state `, state);
+    return state.todos;
+  });
+
+  // * Error in this line
+  // const todos = globalTodosReducers.selectAll();
+  const todos = simpleTodosReducers.selectAll();
+
+  console.log(`todos`, todos);
+
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(fetchTodos());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(fetchTodos());
+  // }, []);
 
   return (
     <Paper

@@ -44,7 +44,7 @@ function TodoList({ todos, loading }) {
                   key={idx}
                 />
               ))
-          : todos.map((todo, i) => (
+          : todos?.map((todo, i) => (
               // To add a key to a fragment, we have to use the long-hand version
               // rather than <> </>, we have to use <React.Fragment>
               <React.Fragment key={todo.id}>

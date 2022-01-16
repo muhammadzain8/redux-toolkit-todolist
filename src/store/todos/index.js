@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 import {
   createTodo,
   deleteTodo,
@@ -6,8 +6,11 @@ import {
   updateTodo,
 } from './extraReducers';
 
+const todosAdapter = createEntityAdapter({
+  selectId: (todo) => todo._id,
+});
+
 const initialState = {
-  todos: [],
   fetching: true,
   error: null,
   addingNew: false,
@@ -15,7 +18,13 @@ const initialState = {
 
 const todosSlice = createSlice({
   name: 'todos',
-  initialState,
+  initialState: todosAdapter.getInitialState(initialState),
+  reducers: {
+    pushNewTodo: todosAdapter.addOne,
+    addManyTodos: todosAdapter.addMany,
+    removeTodo: todosAdapter.removeOne,
+    editTodo: todosAdapter.updateOne,
+  },
 
   // * All async thunk reducers gives us 3 reducers each ,
   // * pending , fulfilled and rejected
@@ -91,6 +100,9 @@ const todosSlice = createSlice({
     // *
   },
 });
+
+// export const globalTodosReducers = todosAdapter.getSelectors((st) => st.todos);
+export const simpleTodosReducers = todosAdapter.getSelectors();
 
 export const { addTodo, removeTodo, toggleTodo, editTodo, clearTodos } =
   todosSlice.actions;
