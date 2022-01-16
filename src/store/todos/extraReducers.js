@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice, nanoid } from '@reduxjs/toolkit';
+import { createAsyncThunk, nanoid } from '@reduxjs/toolkit';
 import { apiCall } from '../../utils/api';
 import { API_BASE_URL } from '../../utils/constants';
 

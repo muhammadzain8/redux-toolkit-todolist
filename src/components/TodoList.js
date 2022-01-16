@@ -4,13 +4,7 @@ import Paper from '@material-ui/core/Paper';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  deleteTodo,
-  editTodo,
-  removeTodo,
-  toggleTodo,
-  updateTodo,
-} from '../store/todos/extraReducers';
+import { deleteTodo, updateTodo } from '../store/todos/extraReducers';
 import { CircularProgress, Typography } from '@material-ui/core';
 import { Skeleton } from '@material-ui/lab';
 

@@ -2,7 +2,7 @@ import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
 import useInputState from '../hooks/useInputState';
-import { addTodo, createTodo } from '../store/todos/extraReducers';
+import { createTodo } from '../store/todos/extraReducers';
 import { useDispatch } from 'react-redux';
 
 function TodoForm() {
