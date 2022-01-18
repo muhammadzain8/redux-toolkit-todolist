@@ -36,7 +36,9 @@ const todosSlice = createSlice({
     },
     [fetchTodos.fulfilled]: (state, { payload }) => {
       state.fetching = false;
-      state.todos = payload.todos;
+      // state.todos = payload.todos;
+      console.log(`payload.todos`, payload.todos);
+      todosAdapter.addMany(state, payload.todos);
     },
     [fetchTodos.rejected]: (state, { payload }) => {
       state.fetching = false;
@@ -53,7 +55,8 @@ const todosSlice = createSlice({
     },
     [createTodo.fulfilled]: (state, { payload }) => {
       state.addingNew = false;
-      state.todos = [...state.todos, payload.todo];
+      // state.todos = [...state.todos, payload.todo];
+      todosAdapter.addOne(state, payload.todo);
     },
     [createTodo.rejected]: (state, { payload }) => {
       console.log(`payload`, payload);
@@ -68,7 +71,8 @@ const todosSlice = createSlice({
     },
     [deleteTodo.fulfilled]: (state, { payload }) => {
       state.loading = false;
-      state.todos = state.todos.filter((el) => el._id !== payload?.todo._id);
+      // state.todos = state.todos.filter((el) => el._id !== payload?.todo._id);
+      todosAdapter.removeOne(state, payload.todo._id);
     },
     [deleteTodo.rejected]: (state, { payload }) => {
       state.loading = false;
@@ -85,9 +89,13 @@ const todosSlice = createSlice({
     },
     [updateTodo.fulfilled]: (state, { payload }) => {
       state.loading = false;
-      state.todos = state.todos.map((el) =>
-        el._id === payload.todo._id ? payload.todo : el
-      );
+      // state.todos = state.todos.map((el) =>
+      //   el._id === payload.todo._id ? payload.todo : el
+      // );
+      todosAdapter.updateOne(state, {
+        id: payload.todo._id,
+        changes: { ...payload.todo },
+      });
     },
     [updateTodo.rejected]: (state, { payload }) => {
       state.loading = false;
@@ -101,7 +109,7 @@ const todosSlice = createSlice({
   },
 });
 
-// export const globalTodosReducers = todosAdapter.getSelectors((st) => st.todos);
+export const globalTodosReducers = todosAdapter.getSelectors((st) => st.todos);
 export const simpleTodosReducers = todosAdapter.getSelectors();
 
 export const { addTodo, removeTodo, toggleTodo, editTodo, clearTodos } =
