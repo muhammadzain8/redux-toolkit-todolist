@@ -4,7 +4,7 @@ import { API_BASE_URL } from '../../utils/constants';
 export const todosApi = createApi({
   reducerPath: 'todosApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: `${API_BASE_URL}/api/todos`,
+    baseUrl: `${API_BASE_URL}/todos`,
     // prepareHeaders: (headers, { getState }) => {
     // const token = getState().auth.token;
     // // If we have a token set in state, let's assume that we should be passing it.
@@ -16,12 +16,22 @@ export const todosApi = createApi({
   }),
   endpoints: (builder) => ({
     getAllTodos: builder.query({
-      query: (name) => `/${name}`,
-      transformResponse: (res) => res.data.todos,
-      pro,
+      query: () => `/`,
+      transformResponse: (res) => {
+        return res.todos;
+      },
     }),
     getTodoByName: builder.query({
       query: (name) => `/${name}`,
     }),
+    updateTodoByName: builder.query({
+      query: ({ id, ...patch }) => ({
+        url: `post/${id}`,
+        method: 'PATCH',
+        body: patch,
+      }),
+    }),
   }),
 });
+
+export const { useGetAllTodosQuery, useGetTodoByNameQuery } = todosApi;
