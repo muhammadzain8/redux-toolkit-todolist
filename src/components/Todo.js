@@ -34,12 +34,17 @@ function Todo(props) {
       ) : (
         <>
           <ListItemText
-            style={{ textDecoration: completed ? 'line-through' : 'none' }}
+            style={{
+              textDecoration: completed ? 'line-through' : 'none',
+            }}
           >
             {task}
           </ListItemText>
           <ListItemSecondaryAction>
-            <IconButton aria-label='Delete' onClick={() => removeTodo(_id)}>
+            <IconButton
+              aria-label='Delete'
+              onClick={() => removeTodo(_id)}
+            >
               <DeleteIcon />
             </IconButton>
             <IconButton aria-label='Edit' onClick={toggle}>

@@ -8,6 +8,7 @@ import {
 
 const todosAdapter = createEntityAdapter({
   selectId: (todo) => todo._id,
+  // sortComparer: (a, b) => a.title.localeCompare(b.title),
 });
 
 const initialState = {
@@ -19,6 +20,7 @@ const initialState = {
 const todosSlice = createSlice({
   name: 'todos',
   initialState: todosAdapter.getInitialState(initialState),
+
   reducers: {
     pushNewTodo: todosAdapter.addOne,
     addManyTodos: todosAdapter.addMany,
@@ -28,6 +30,7 @@ const todosSlice = createSlice({
 
   // * All async thunk reducers gives us 3 reducers each ,
   // * pending , fulfilled and rejected
+
   extraReducers: {
     // * Fetch Todos Reducers
     [fetchTodos.pending]: (state) => {
@@ -109,9 +112,17 @@ const todosSlice = createSlice({
   },
 });
 
-export const globalTodosReducers = todosAdapter.getSelectors((st) => st.todos);
+export const globalTodosReducers = todosAdapter.getSelectors(
+  (st) => st.todos
+);
+
 export const simpleTodosReducers = todosAdapter.getSelectors();
 
-export const { addTodo, removeTodo, toggleTodo, editTodo, clearTodos } =
-  todosSlice.actions;
+export const {
+  addTodo,
+  removeTodo,
+  toggleTodo,
+  editTodo,
+  clearTodos,
+} = todosSlice.actions;
 export default todosSlice.reducer;
